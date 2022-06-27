@@ -1,0 +1,11 @@
+{
+  "Model": "VERSPM Test PSRC",
+  "Scenario": "Test PSRC",
+  "Description": "PSRC Test of VERSPM",
+  "Region": "PSRC",
+  "BaseYear": "2018",
+  "Years": ["2018", "2050"],
+  "DatastoreName": "Datastore",
+  "DatastoreType": "RD",
+  "Seed": 1
+}

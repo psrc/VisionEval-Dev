@@ -915,10 +915,10 @@ CalculateHouseholdDvmt <- function(L) {
   IsUr_ <- Hh_df$LocType == "Urban"
   AveDvmt_[IsUr_] <-
     as.vector(eval(parse(text = DvmtModel_ls$Metro$Ave),
-                   envir = Hh_df[IsUr_,])) ^ (1 / DvmtModel_ls$Metro$Pow)
+                   envir = Hh_df[IsUr_,]*1.065)) ^ (1 / DvmtModel_ls$Metro$Pow)
   AveDvmt_[!IsUr_] <-
     as.vector(eval(parse(text = DvmtModel_ls$NonMetro$Ave),
-                   envir = Hh_df[!IsUr_,])) ^ (1 / DvmtModel_ls$NonMetro$Pow)
+                   envir = Hh_df[!IsUr_,]*1.065)) ^ (1 / DvmtModel_ls$NonMetro$Pow)
   #Replace NaN values (model predicts below zero)
   AveDvmt_[is.na(AveDvmt_)] <- quantile(AveDvmt_[!is.na(AveDvmt_)], 0.01)
   #Limit the household DVMT to be no greater than 99th percentile for the population
@@ -932,10 +932,10 @@ CalculateHouseholdDvmt <- function(L) {
   Dvmt95th_ <- numeric(NumHh)
   Dvmt95th_[IsUr_] <-
     as.vector(eval(parse(text = DvmtModel_ls$Metro$Pctl95),
-                   envir = Hh_df[IsUr_,]))
+                   envir = Hh_df[IsUr_,]*1.065))
   Dvmt95th_[!IsUr_] <-
     as.vector(eval(parse(text = DvmtModel_ls$NonMetro$Pctl95),
-                   envir = Hh_df[!IsUr_,]))
+                   envir = Hh_df[!IsUr_,]*1.065))
 
   #Sum the DVMT by Marea
   #--------------------

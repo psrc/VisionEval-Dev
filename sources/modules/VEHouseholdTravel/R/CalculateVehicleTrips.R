@@ -130,10 +130,10 @@ Hh_df$Intercept <- 1
 Hh_df$AveDvmt <- NA
 Hh_df$AveDvmt[Hh_df$IsMetro] <-
   as.vector(eval(parse(text = DvmtModel_ls$Metro$Ave),
-                 envir = Hh_df[Hh_df$IsMetro,])) ^ (1 / DvmtModel_ls$Metro$Pow)
+                 envir = Hh_df[Hh_df$IsMetro,])*1.065) ^ (1 / DvmtModel_ls$Metro$Pow)
 Hh_df$AveDvmt[!Hh_df$IsMetro] <-
   as.vector(eval(parse(text = DvmtModel_ls$NonMetro$Ave),
-                 envir = Hh_df[!Hh_df$IsMetro,])) ^ (1 / DvmtModel_ls$NonMetro$Pow)
+                 envir = Hh_df[!Hh_df$IsMetro,])*1.065) ^ (1 / DvmtModel_ls$NonMetro$Pow)
 #Cap at 99th percentile
 MaxAveDvmt <- quantile(Hh_df$AveDvmt, probs = 0.99, na.rm = TRUE)
 Hh_df$AveDvmt[Hh_df$AveDvmt > MaxAveDvmt] <- MaxAveDvmt
@@ -634,11 +634,11 @@ CalculateVehicleTrips <- function(L) {
   AveTrpLen_Hh <- rep(NA, nrow(Hh_df))
   #Model average trip length for metropolitan households
   AveTrpLen_Hh[IsMetro] <-
-    applyLinearModel(VehTrpLenModel_ls$Metro, Hh_df[IsMetro,])
+    applyLinearModel(VehTrpLenModel_ls$Metro, Hh_df[IsMetro,])/1.08
   #Model average trip length for non-metropolitan households
   if (any(Hh_df$LocType!="Urban")) {
   AveTrpLen_Hh[!IsMetro] <-
-    applyLinearModel(VehTrpLenModel_ls$NonMetro, Hh_df[!IsMetro,])
+    applyLinearModel(VehTrpLenModel_ls$NonMetro, Hh_df[!IsMetro,])/1.08
   }
   #Cap the maximum value at the 99th percentile value
   MaxAveTrpLen <- quantile(AveTrpLen_Hh, probs = 0.99)
