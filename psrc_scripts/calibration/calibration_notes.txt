@@ -1,0 +1,20 @@
+# Calibration steps
+- Change variables in these scripts:
+    - CalculateVehicleTrips.R
+    - CalculateHouseholdDvmt.R
+    - CalcualteAltModeTrips.R
+
+See previous commits to note the exact locations of scaling factors
+
+Once changes are made, build a clean version
+- first, clean with ve.build(c("clean"))
+- then, ve.build() (should take 30-60 min)
+
+There will be a "built" folder now available. 
+
+- Copy "defs" and "inputs" from psrc_scripts folder in this repo, to built/visioneval/4.1.2/runtime/models/VERSPM
+
+- Open the file "run_model.R" in RStudio.
+- setwd to location of the newly built model (e.g. C:/workspace/visioneval-dev/built/visioneval/4.1.2/runtime/models/VERSPM)
+- Select all code from run_model.R and execute
+- Run validation.ipynb to check results and adjust calibration factors
