@@ -167,13 +167,13 @@ Hh_df$Intercept <- 1
 #Apply the model
 IsMetro <- Hh_df$IsMetro
 Hh_df$Dvmt <- NA
-#SXU apply scale factor to dvmt: 1.065
+#SXU apply scale factor to dvmt: 0.98
 Hh_df$Dvmt[IsMetro] <-
   (as.vector(eval(parse(text = DvmtModel_ls$Metro$Ave),
-                 envir = Hh_df[IsMetro,]))*1.065) ^ (1 / DvmtModel_ls$Metro$Pow)
+                 envir = Hh_df[IsMetro,]))*0.98) ^ (1 / DvmtModel_ls$Metro$Pow)
 Hh_df$Dvmt[!IsMetro] <-
   (as.vector(eval(parse(text = DvmtModel_ls$NonMetro$Ave),
-                 envir = Hh_df[!IsMetro,]))*1.065) ^ (1 / DvmtModel_ls$NonMetro$Pow)
+                 envir = Hh_df[!IsMetro,]))*0.98) ^ (1 / DvmtModel_ls$NonMetro$Pow)
 Hh_df$LogDvmt <- log(Hh_df$Dvmt)
 
 #Reduce size of dataset and remove incomplete cases

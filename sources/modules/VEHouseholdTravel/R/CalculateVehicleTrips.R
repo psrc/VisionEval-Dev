@@ -128,13 +128,13 @@ Hh_df$Workers <- Hh_df$Wrkcount
 Hh_df$Intercept <- 1
 #Predict average DVMT
 Hh_df$AveDvmt <- NA
-#SXU apply the scale factor to dvmt:0.9
+#SXU apply the scale factor to dvmt:1.05
 Hh_df$AveDvmt[Hh_df$IsMetro] <-
   (as.vector(eval(parse(text = DvmtModel_ls$Metro$Ave),
-                 envir = Hh_df[Hh_df$IsMetro,]))*0.95) ^ (1 / DvmtModel_ls$Metro$Pow)
+                 envir = Hh_df[Hh_df$IsMetro,]))*0.98) ^ (1 / DvmtModel_ls$Metro$Pow)
 Hh_df$AveDvmt[!Hh_df$IsMetro] <-
   (as.vector(eval(parse(text = DvmtModel_ls$NonMetro$Ave),
-                 envir = Hh_df[!Hh_df$IsMetro,]))*0.95) ^ (1 / DvmtModel_ls$NonMetro$Pow)
+                 envir = Hh_df[!Hh_df$IsMetro,]))*0.98) ^ (1 / DvmtModel_ls$NonMetro$Pow)
 #Cap at 99th percentile
 MaxAveDvmt <- quantile(Hh_df$AveDvmt, probs = 0.99, na.rm = TRUE)
 Hh_df$AveDvmt[Hh_df$AveDvmt > MaxAveDvmt] <- MaxAveDvmt
@@ -632,15 +632,15 @@ CalculateVehicleTrips <- function(L) {
   #Apply the average trip length model
   #-----------------------------------
   #Initialize vector to store trip length results
-  #sxu - apply the scale factor to the trip length: 1/1.15
+  #sxu - apply the scale factor to the trip length: 1/1.2
   AveTrpLen_Hh <- rep(NA, nrow(Hh_df))
   #Model average trip length for metropolitan households
   AveTrpLen_Hh[IsMetro] <-
-    applyLinearModel(VehTrpLenModel_ls$Metro, Hh_df[IsMetro,])/1.15
+    applyLinearModel(VehTrpLenModel_ls$Metro, Hh_df[IsMetro,])/1.2
   #Model average trip length for non-metropolitan households
   if (any(Hh_df$LocType!="Urban")) {
   AveTrpLen_Hh[!IsMetro] <-
-    applyLinearModel(VehTrpLenModel_ls$NonMetro, Hh_df[!IsMetro,])/1.15
+    applyLinearModel(VehTrpLenModel_ls$NonMetro, Hh_df[!IsMetro,])/1.2
   }
   #Cap the maximum value at the 99th percentile value
   MaxAveTrpLen <- quantile(AveTrpLen_Hh, probs = 0.99)

@@ -120,17 +120,17 @@ estimateAltModeTripModel <- function(Data_df, DepVar, IndepVars_) {
   #Extract the coefficients
   Coeff. <- coefficients(Model_HM)
   #SXU update the coefficient 
-  # if (DepVar == "NumBikeTrp") {
+  if (DepVar == "NumBikeTrp") {
   #  Coeff.["zero_BusEqRevMiPC"] = Coeff.["zero_BusEqRevMiPC"] * -2.2
-  #  Coeff.["zero_LogIncome"] = Coeff.["zero_LogIncome"] * 1.7
-  #  }
+   Coeff.["zero_LogIncome"] = Coeff.["zero_LogIncome"] * 1.7000
+   }
   if (DepVar == "NumTransitTrp") {
    Coeff.["zero_LogIncome"] = Coeff.["zero_LogIncome"] * 0.76
    Coeff.["zero_HhSize"] = Coeff.["zero_HhSize"] * 0.6
    Coeff.["zero_BusEqRevMiPC"] = Coeff.["zero_BusEqRevMiPC"] * 0.5
    }
   if (DepVar == "NumWalkTrp") {
-   Coeff.["zero_LogIncome"] = Coeff.["zero_LogIncome"] * 2
+   Coeff.["zero_LogIncome"] = Coeff.["zero_LogIncome"] * 1.9
    Coeff.["zero_HhSize"] = Coeff.["zero_HhSize"] * 2
    Coeff.["zero_BusEqRevMiPC"] = Coeff.["zero_BusEqRevMiPC"] * -0.01
    Coeff.["count_BusEqRevMiPC"] = Coeff.["count_BusEqRevMiPC"] * -0.2
